@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] public float _movementSpeed = 0f;
+    public float _movementSpeed = 0f;
     //[SerializeField] public float _dashSpeed = 0f;
     //[SerializeField] private AnimationCurve _dashSpeedCurve;
     //[SerializeField] private float _dashTime = 0.2f;
@@ -33,13 +33,13 @@ public class PlayerMovement : MonoBehaviour
         {
             //_animator.SetBool("isRunning", true);
             //_music.Play();
+            Move(moveDirection);
         }
         else
         {
             //_animator.SetBool("isRunning", false);
             //_music.Stop();
         }
-        Move(moveDirection);
 
         /*
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -52,11 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(Vector2 direction)
     {
-        if (direction == Vector2.zero)
-        {
-            return;
-        }
-        if (_isDashing) return;
+        //if (_isDashing) return;
 
         if (direction.x < 0)
         {
