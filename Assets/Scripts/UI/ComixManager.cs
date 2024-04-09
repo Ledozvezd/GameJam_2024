@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class ComixManager : MonoBehaviour
 {
-    [SerializeField] public GameObject[] images;
-    public int i = 0;
-    public void Start()
+    [SerializeField] public Image[] images;
+    private int i = 0;
+    private void Start()
     {
-        DOTween.Init();
+        DOTween.Init(true);
     }
-    public void Update()
+    private void Update()
     {
-        if(Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            images[i].SetActive(true);
+            images[i].DOColor(new Color(1, 1, 1, 1.0f), 1.5f);
             i++;
-            if( i > images.Length - 1)
+            if (i > images.Length - 1)
             {
                 SceneManager.LoadScene("Level");
             }
