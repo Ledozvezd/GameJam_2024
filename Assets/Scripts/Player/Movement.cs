@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer _sprite;
 
     private Rigidbody2D _rb;
-    private Collider2D _trigger;
     private Attack _attack;
     private bool _isDashing;
     private float X;
@@ -22,8 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _trigger = GetComponent<Collider2D>();
-        _attack = GetComponent<Attack>();
+        _attack = GetComponentInChildren<Attack>();
     }
 
     private void Update()
@@ -66,12 +64,12 @@ public class PlayerMovement : MonoBehaviour
         if (direction.x < 0)
         {
             _sprite.flipX = true;
-            _trigger.offset = new Vector2(-1.5f,0);
+            _attack.transform.position = new Vector2(-1.6f,0.7f);
         }
         else
         {
             _sprite.flipX = false;
-            _trigger.offset = new Vector2(1.5f,0);
+            _attack.transform.position = new Vector2(1.6f, 0.7f);
         }
         
 
