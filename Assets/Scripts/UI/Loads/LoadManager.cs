@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadManager : MonoBehaviour
 {
     private Animator _animator;
-    private static bool _shouldPlayOpen = false;
+    private static bool _shouldPlayOpen;
 
     private static LoadManager instance;
     private AsyncOperation _loadingOperation;
@@ -29,6 +27,7 @@ public class LoadManager : MonoBehaviour
     public void AnimationOver() 
     {
         Debug.Log("Over");
+        //Debug.Log()
         _shouldPlayOpen = true;
         _loadingOperation.allowSceneActivation = true;
     }
