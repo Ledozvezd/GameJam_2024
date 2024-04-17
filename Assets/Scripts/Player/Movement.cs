@@ -63,12 +63,12 @@ public class PlayerMovement : MonoBehaviour
         }
         if (direction.x < 0)
         {
-            _sprite.flipX = true;
+            _sprite.flipX = false;
             _attack.transform.position = new Vector2(-1.6f,0.7f);
         }
         else
         {
-            _sprite.flipX = false;
+            _sprite.flipX = true;
             _attack.transform.position = new Vector2(1.6f, 0.7f);
         }
         
