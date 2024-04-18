@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -5,17 +6,27 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     [SerializeField] private Animator _playerAnim;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private GameObject _sprite;
 
     private float _timeBtwAtck = -1.0f;
-    private float startTimeBtwAtck = 0.45f;
+    private float startTimeBtwAtck = 0.23f;
 
     public bool isAttacking { get; private set; }
 
-    void Update()
+    void Update() //Тут через сферу и войд атак всё заделать. Реф есть
     {
         if (Input.GetMouseButtonDown(0) && _timeBtwAtck < 0) 
         {
-            _playerAnim.SetTrigger("Attack");
+            
+            if(_spriteRenderer.flipX)
+            {
+                _playerAnim.SetTrigger("AttackL");
+            }
+            else
+            {
+                _playerAnim.SetTrigger("AttackR");
+            }
             _timeBtwAtck = startTimeBtwAtck;
             Debug.Log("Attc");
             isAttacking = true;
@@ -23,6 +34,7 @@ public class Attack : MonoBehaviour
         else
         {
             isAttacking = false;
+            _sprite.transform.position = Vector2.zero;
         }
 
         if(_timeBtwAtck >= 0){
