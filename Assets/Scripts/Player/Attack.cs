@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private Animator _playerAnim;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _sprite;
+    [SerializeField] private AudioSource _music;
 
     private float _timeBtwAtck = -1.0f;
     private float startTimeBtwAtck = 0.23f;
@@ -28,8 +30,8 @@ public class Attack : MonoBehaviour
                 _playerAnim.SetTrigger("AttackR");
             }
             _timeBtwAtck = startTimeBtwAtck;
-            Debug.Log("Attc");
-            isAttacking = true;
+            _music.Play();
+            StartCoroutine(AttackHim());
         }
         else
         {
@@ -53,5 +55,10 @@ public class Attack : MonoBehaviour
         {
             other.GetComponent<Enemy>().Suffer(Player.myDamage);
         }
+    }
+
+    private IEnumerator AttackHim()
+    {
+        yield return null;
     }
 }
