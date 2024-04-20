@@ -10,7 +10,7 @@ public class LoadManager : MonoBehaviour
     private AsyncOperation _loadingOperation;
     public static void SwitchToScene(string sceneName)
     {
-        instance._animator.SetTrigger("Start");
+        instance._animator.SetTrigger("End");
         Debug.Log("Switch");
         instance._loadingOperation = SceneManager.LoadSceneAsync(sceneName);
         instance._loadingOperation.allowSceneActivation = false;
@@ -20,7 +20,7 @@ public class LoadManager : MonoBehaviour
         instance = this;
         _animator = GetComponent<Animator>();
 
-        if (_shouldPlayOpen) _animator.SetTrigger("End");
+        if (_shouldPlayOpen) _animator.SetTrigger("Start");
         Debug.Log("Start");
     }
 

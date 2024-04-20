@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] private AnimationCurve _dashSpeedCurve;
     //[SerializeField] private float _dashTime = 0.2f;
 
-    //[SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private AudioSource _music;
     [SerializeField] private SpriteRenderer _sprite;
 
     private Rigidbody2D _rb;
@@ -35,14 +36,14 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection != Vector2.zero)
         {
             Move(moveDirection);
-            //_animator.SetBool("isRunning", true);
-            //_music.Play();
+            _animator.SetBool("isRunning", true);
+            _music.Play();
         }
         else
         {
             _rb.velocity = Vector2.zero;
-            //_animator.SetBool("isRunning", false);
-            //_music.Stop();
+            _animator.SetBool("isRunning", false);
+            _music.Stop();
         }
 
         /*
