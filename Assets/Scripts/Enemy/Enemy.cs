@@ -32,6 +32,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int playerDamage)
+    {
+        HP -= playerDamage;
+        if(HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) //Через Event сделать
     {
         if(collision.CompareTag("Player")) 

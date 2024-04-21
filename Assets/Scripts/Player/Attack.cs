@@ -49,18 +49,16 @@ public class Attack : MonoBehaviour
         }
     }
 
-    public void AttackHim()
+    // Make Attack Script   for Player                  
+        
+
+    public void AttackHim()//Fix it
     {
         Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPoint.position, _size, _layerMask);
             foreach (Collider2D c in enemies)
             {
                 c.GetComponent<Enemy>().Suffer(Player.myDamage);
-                //c.GetComponent<Enemy>.Suffer(Player.myDamage);
             }
-        for (int i = 0; i < enemies.Length; i++)
-        {
-            enemies[i].GetComponent<Enemy>().Suffer(10);
-        }
     }
 
     private void OnDrawGizmosSelected()
