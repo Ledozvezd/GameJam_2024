@@ -10,55 +10,61 @@ public class Attack : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private GameObject _sprite;
     [SerializeField] private AudioSource _music;
-
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private float _size;
+    [SerializeField] private LayerMask _layerMask;
+    
     private float _timeBtwAtck = -1.0f;
     private float startTimeBtwAtck = 0.23f;
 
-    public bool isAttacking { get; private set; }
+    public bool isAttacking { get; private set; } //Хзшка, багов без него нет, а с ним время от времени ГГ не может ходить
 
-    void Update() //Тут через сферу и войд атак всё заделать. Реф есть
+    void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _timeBtwAtck < 0) 
+        //Debug.Log(isAttacking);
+        if (_timeBtwAtck < 0)
         {
-            
-            if(_spriteRenderer.flipX)
+            if (Input.GetMouseButtonDown(0)) 
             {
-                _playerAnim.SetTrigger("AttackL");
+                //Debug.Log(isAttacking);
+                if (_spriteRenderer.flipX)
+                {
+                    _playerAnim.SetTrigger("AttackL");
+                }
+                else
+                {
+                    _playerAnim.SetTrigger("AttackR");
+                }
+                _timeBtwAtck = startTimeBtwAtck;
+                _music.Play();
+                AttackHim();
+                //isAttacking = true;
             }
-            else
-            {
-                _playerAnim.SetTrigger("AttackR");
-            }
-            _timeBtwAtck = startTimeBtwAtck;
-            _music.Play();
-            StartCoroutine(AttackHim());
         }
         else
         {
-            isAttacking = false;
-            _sprite.transform.position = Vector2.zero;
-        }
-
-        if(_timeBtwAtck >= 0){
+           //isAttacking = false;
             _timeBtwAtck -= Time.deltaTime;
-            //isAttacking = true;
-            
-        }
-        else
-        {
-            //isAttacking = false;
-        }
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if(other.CompareTag("Enemy") && isAttacking)
-        {
-            other.GetComponent<Enemy>().Suffer(Player.myDamage);
+            //_sprite.transform.position = Vector2.zero;
         }
     }
 
-    private IEnumerator AttackHim()
+    public void AttackHim()
     {
-        yield return null;
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPoint.position, _size, _layerMask);
+            foreach (Collider2D c in enemies)
+            {
+                c.GetComponent<Enemy>().Suffer(Player.myDamage);
+                //c.GetComponent<Enemy>.Suffer(Player.myDamage);
+            }
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().Suffer(10);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(_attackPoint.position, _size);
     }
 }

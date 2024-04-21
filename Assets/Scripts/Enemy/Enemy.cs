@@ -5,12 +5,15 @@ using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
-    private int HP = 30;
-    private float _speed = 1.5f;
+    private int HP = 15;
+    private float _speed = 1f;
     private Vector2 _target;
+
+    //private static Enemy instance;
 
     void Start()
     {
+        //instance = this;
     }
 
     void FixedUpdate()
@@ -26,6 +29,14 @@ public class Enemy : MonoBehaviour
         if(HP < 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) //Через Event сделать
+    {
+        if(collision.CompareTag("Player")) 
+        {
+            Player.TakeDamage(10);
         }
     }
 }
