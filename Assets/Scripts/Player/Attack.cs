@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
     
     private float _timeBtwAtck = -1.0f;
-    private float startTimeBtwAtck = 0.23f;
+    private float startTimeBtwAtck = 0.5f;
     Collider2D[] enemies;
 
     public bool isAttacking;// { get; private set; } //Хзшка, багов без него нет, а с ним время от времени ГГ не может ходить
@@ -67,4 +67,9 @@ public class Attack : MonoBehaviour
             }
         }
     }
+
+    //public void AttackIt()
+    //{
+       // Collider2D.
+    //}
 }
