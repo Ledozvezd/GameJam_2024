@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class EnemyAtc : MonoBehaviour
 {
-    private bool _isAttacking;
+    private bool _isAttacking = false;
     Animator _animator;
+    SpriteRenderer _spriteRenderer;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     public void StartAtc()
     {
@@ -24,9 +26,16 @@ public class EnemyAtc : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision) //ХП много снимает
     {
         
-        if (collision.CompareTag("Player") && !_isAttacking)
+        if (collision.CompareTag("Player") && !_isAttacking)//&& !_isAttacking
         {
-            _animator.SetTrigger("Attack");
+            if(_spriteRenderer.flipX) 
+            {
+                _animator.SetTrigger("AttackL");
+            }
+            else
+            {
+                _animator.SetTrigger("Attack");
+            }
             Player.TakeDamage(5);
             StopAtc();
         }

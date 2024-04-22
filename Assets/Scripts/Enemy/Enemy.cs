@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour
 {
     public int HP = 25;
     private float _speed = 4;
     private Vector2 _target;
+    private SpriteRenderer _spriteRenderer;
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     void FixedUpdate()
     {
@@ -27,6 +34,14 @@ public class Enemy : MonoBehaviour
         else
         {
             _speed = 4;
+        }
+        if (_target.x - transform.position.x <= 0)
+        {
+            _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.61f);
     }
