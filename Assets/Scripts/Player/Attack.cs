@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Diagnostics.Tracing;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -16,8 +12,9 @@ public class Attack : MonoBehaviour
     
     private float _timeBtwAtck = -1.0f;
     private float startTimeBtwAtck = 0.23f;
+    Collider2D[] enemies;
 
-    public bool isAttacking { get; private set; } //Хзшка, багов без него нет, а с ним время от времени ГГ не может ходить
+    public bool isAttacking;// { get; private set; } //Хзшка, багов без него нет, а с ним время от времени ГГ не может ходить
 
     void Update()
     {
@@ -29,6 +26,7 @@ public class Attack : MonoBehaviour
                 //Debug.Log(isAttacking);
                 if (_spriteRenderer.flipX)
                 {
+                    
                     _playerAnim.SetTrigger("AttackL");
                 }
                 else
@@ -37,32 +35,36 @@ public class Attack : MonoBehaviour
                 }
                 _timeBtwAtck = startTimeBtwAtck;
                 _music.Play();
-                AttackHim();
+                //AttackHim();
                 //isAttacking = true;
             }
         }
         else
         {
-           //isAttacking = false;
             _timeBtwAtck -= Time.deltaTime;
             //_sprite.transform.position = Vector2.zero;
         }
-    }
-
-    // Make Attack Script   for Player                  
+    }                 
         
-
-    public void AttackHim()//Fix it
+    public void StartAtack()//Fix it OverlapCircleAll - работает только на вход TriggerStay мб
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPoint.position, _size, _layerMask);
-            foreach (Collider2D c in enemies)
-            {
-                c.GetComponent<Enemy>().Suffer(Player.myDamage);
-            }
+        isAttacking = true;
     }
 
-    private void OnDrawGizmosSelected()
+    public void EndAttack()
     {
-        Gizmos.DrawSphere(_attackPoint.position, _size);
+       isAttacking = false;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Enemy") && isAttacking)
+        {
+            enemies = collision.GetComponents<Collider2D>();
+            foreach (var item in enemies)
+            {
+                item.GetComponent<Enemy>().Suffer(5);
+            }
+        }
     }
 }

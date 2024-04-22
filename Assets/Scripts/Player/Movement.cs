@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _attack = GetComponent<Attack>();
+        _attack = GetComponentInChildren<Attack>();
     }
 
     private void Update()
@@ -43,10 +43,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move(Vector2 direction)
     {
-        //if(_attack.isAttacking) ¬роде как не надо, но пусть пока будет
-        //{
-            //return;
-        //}
+        if(_attack.isAttacking) 
+        {
+            return;
+        }
         if (direction.x < 0)
         {
             _sprite.flipX = true;

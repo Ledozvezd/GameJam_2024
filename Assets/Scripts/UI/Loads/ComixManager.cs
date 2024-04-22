@@ -9,6 +9,7 @@ public class ComixManager : MonoBehaviour
     [SerializeField] public Image[] images;
     [SerializeField] private GameObject _LoadManager;
     private int i = 0;
+    private bool flag = true;
     private void Start()
     {
         DOTween.Init(true);
@@ -18,21 +19,25 @@ public class ComixManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            if (i+1 >= images.Length)
+            if (flag)
             {
-                images[i].gameObject.SetActive(true);
-                images[i].DOColor(new Color(0, 0, 0, 0.0f), 0.5f);
-                images[i].gameObject.SetActive(false);
-                _LoadManager.SetActive(true);
-                LoadManager.SwitchToScene("Level");
-            }
-            else
-            {
-                images[i].DOColor(new Color(0, 0, 0, 0.0f), 0.5f);
-                images[i].gameObject.SetActive(false);
-                i++;
-                images[i].gameObject.SetActive(true);
-                images[i].DOColor(new Color(1, 1, 1, 1.0f), 1.5f);
+                if (i + 1 >= images.Length)
+                {
+                    images[i].gameObject.SetActive(true);
+                    images[i].DOColor(new Color(0, 0, 0, 0.0f), 0.5f);
+                    images[i].gameObject.SetActive(false);
+                    _LoadManager.SetActive(true);
+                    LoadManager.SwitchToScene("Level");
+                    flag = false;
+                }
+                else
+                {
+                    images[i].DOColor(new Color(0, 0, 0, 0.0f), 0.5f);
+                    images[i].gameObject.SetActive(false);
+                    i++;
+                    images[i].gameObject.SetActive(true);
+                    images[i].DOColor(new Color(1, 1, 1, 1.0f), 1.5f);
+                }
             }
         }
     }
