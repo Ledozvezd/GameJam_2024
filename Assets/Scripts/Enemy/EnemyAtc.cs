@@ -23,6 +23,7 @@ public class EnemyAtc : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision) //ХП много снимает
     {
+        
         if (collision.CompareTag("Player") && !_isAttacking)
         {
             _animator.SetTrigger("Attack");
