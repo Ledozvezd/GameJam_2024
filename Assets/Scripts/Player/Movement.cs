@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private AudioSource _music;
     [SerializeField] private SpriteRenderer _sprite;
 
-    [SerializeField] private Transform _point;
-
     private Rigidbody2D _rb;
     private Attack _attack;
     private float X;
@@ -50,12 +48,10 @@ public class PlayerMovement : MonoBehaviour
         if (direction.x < 0)
         {
             _sprite.flipX = true;
-            _point.position = new Vector2(-2.7f + transform.position.x, -0.8f + transform.position.y);
         }
         else
         {
             _sprite.flipX = false;
-            _point.position = new Vector2(2.7f + transform.position.x, -0.8f + transform.position.y);
         }
         ApplyVelocity(direction);
     }

@@ -7,7 +7,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour
 {
-    public int HP = 25;
+    public int HP = 30;
     private float _speed = 4;
     private Vector2 _target;
     private SpriteRenderer _spriteRenderer;

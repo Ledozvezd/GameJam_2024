@@ -4,40 +4,44 @@ using UnityEngine;
 
 public class EnemyAtc : MonoBehaviour
 {
-    private bool _isAttacking = false;
     Animator _animator;
     SpriteRenderer _spriteRenderer;
+
+    private float timeBtwAttack = -1;
+    private float timeStartAttack = 0.4f;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-    public void StartAtc()
-    {
-        _isAttacking = false;
-    }
-
-    public void StopAtc()
-    {
-        _isAttacking = true;
-    }
 
     private void OnTriggerStay2D(Collider2D collision) //ХП много снимает
     {
-        
-        if (collision.CompareTag("Player") && !_isAttacking)//&& !_isAttacking
+
+        if (collision.CompareTag("Player"))//&& !_isAttacking
         {
-            if(_spriteRenderer.flipX) 
+            if (timeBtwAttack < 0)
             {
-                _animator.SetTrigger("AttackL");
+                if (_spriteRenderer.flipX)
+                {
+                    _animator.SetTrigger("AttackL");
+                }
+                else
+                {
+                    _animator.SetTrigger("Attack");
+                }
             }
             else
             {
-                _animator.SetTrigger("Attack");
+                timeBtwAttack -= Time.deltaTime;
             }
-            Player.TakeDamage(5);
-            StopAtc();
         }
+    }
+
+    public void EnemyAttack()
+    {
+        Player.TakeDamage(5);
+        timeBtwAttack = timeStartAttack;
     }
 }
