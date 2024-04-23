@@ -6,7 +6,7 @@ public class EnemyAtc : MonoBehaviour
 {
     Animator _animator;
     SpriteRenderer _spriteRenderer;
-
+    AudioSource AudioSource;
     private float timeBtwAttack = -1;
     private float timeStartAttack = 0.4f;
 
@@ -14,6 +14,7 @@ public class EnemyAtc : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        AudioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerStay2D(Collider2D collision) //ХП много снимает
@@ -31,6 +32,7 @@ public class EnemyAtc : MonoBehaviour
                 {
                     _animator.SetTrigger("Attack");
                 }
+                AudioSource.Play();
             }
             else
             {

@@ -20,18 +20,19 @@ public class Spawn : MonoBehaviour
                 temp = Random.Range(0, temp);
                 GameObject.Instantiate(_enmemies[0], _position[temp] + transform.position, Quaternion.identity);
             }  
-            /*for (int i = 0; i < _amountEnemies[1]; i++)
+            for (int i = 0; i < _amountEnemies[1]; i++)
             {
                 temp = _position.Length;
                 temp = Random.Range(0, temp);
                 GameObject.Instantiate(_enmemies[1], _position[temp], Quaternion.identity);
             }   
-            for (int i = 0; i < _amountEnemies[2]; i++)
+            /*for (int i = 0; i < _amountEnemies[2]; i++)
             {
                 temp = _position.Length;
                 temp = Random.Range(0, temp);
                 GameObject.Instantiate(_enmemies[2], _position[temp], Quaternion.identity);
             }*/
         }
+        Destroy(gameObject);
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -12,7 +13,12 @@ public class Player : MonoBehaviour
     public static bool isInvul;
     public Vector3 position;
     [SerializeField] Slider _slider;
+    public Animator animator;
 
+    private void Awake()
+    {
+        _health = 100;
+    }
     public static void TakeDamage(int enemyDamage)
     {
         if (isInvul)
@@ -23,6 +29,9 @@ public class Player : MonoBehaviour
         _health -= enemyDamage;
         if( _health <= 0 )
         {
+            
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
             Debug.Log("Вы мертв!");
         }
     }
@@ -39,6 +48,7 @@ public class Player : MonoBehaviour
     public void Heal(int health)
     {
         _health += health;
+        Debug.Log(_health);
         if (_health > 100)
         {
             _health = 100;
@@ -47,6 +57,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         _slider.value = _health;
+        
     }
 
 }

@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject _death;
     [SerializeField] GameObject _sprite;
+    [SerializeField] bool _isStatic = false;
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -23,13 +24,33 @@ public class Enemy : MonoBehaviour
 
     void FixedUpdate()
     {
+       if(!_isStatic)
+        {
+            Go();
+        }
+    }
+
+    public void Suffer(int damage)
+    {
+        _animator.SetTrigger("Damage");
+        HP -= damage;
+        Debug.Log("Àé þäÿüá!");
+        if(HP < 0)
+        {
+            _death.SetActive(true);
+            _sprite.SetActive(false);
+        }
+    }
+
+    private void Go()
+    {
         _target = Player.GiveCoordinates();
         transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
         if (transform.position.y > -0.81f)
         {
             transform.position = new Vector2(transform.position.x, -0.81f);
         }
-        if(Mathf.Abs(transform.position.x - _target.x) < _minDistance)
+        if (Mathf.Abs(transform.position.x - _target.x) < _minDistance)
         {
             _speed = 0;
         }
@@ -47,16 +68,6 @@ public class Enemy : MonoBehaviour
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.61f);
     }
+     
 
-    public void Suffer(int damage)
-    {
-        _animator.SetTrigger("Damage");
-        HP -= damage;
-        Debug.Log("Àé þäÿüá!");
-        if(HP < 0)
-        {
-            _death.SetActive(true);
-            _sprite.SetActive(false);
-        }
-    }
 }

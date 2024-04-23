@@ -72,6 +72,16 @@ public class Attack : MonoBehaviour
        isAttacking = false;
     }
 
+    public void StartBlock()
+    {
+        Player.isInvul = true;
+    }
+
+    public void EndBlock()
+    {
+        Player.isInvul = false;
+    }    
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy") && isAttacking)
