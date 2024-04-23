@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour
 {
     public int HP = 30;
     private float _speed = 4;
+    private float _minDistance = 1f;
     private Vector2 _target;
-    private SpriteRenderer _spriteRenderer;
 
+    private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
+
+    [SerializeField] GameObject _death;
+    [SerializeField] GameObject _sprite;
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     void FixedUpdate()
@@ -25,10 +29,8 @@ public class Enemy : MonoBehaviour
         {
             transform.position = new Vector2(transform.position.x, -0.81f);
         }
-        if(Mathf.Abs(transform.position.x - _target.x) < 1f)
+        if(Mathf.Abs(transform.position.x - _target.x) < _minDistance)
         {
-            //Debug.Log("So close!");
-            //transform.position = new Vector3(transform.position.x + 0.1f, transform.position.y, transform.position.z);
             _speed = 0;
         }
         else
@@ -48,11 +50,13 @@ public class Enemy : MonoBehaviour
 
     public void Suffer(int damage)
     {
+        _animator.SetTrigger("Damage");
         HP -= damage;
         Debug.Log("Àé þäÿüá!");
         if(HP < 0)
         {
-            Destroy(gameObject);
+            _death.SetActive(true);
+            _sprite.SetActive(false);
         }
     }
 }

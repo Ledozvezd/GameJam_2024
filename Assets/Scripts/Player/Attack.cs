@@ -14,10 +14,26 @@ public class Attack : MonoBehaviour
     private float startTimeBtwAtck = 0.5f;
     Collider2D[] enemies;
 
+    private float _timeBtwBlock = -1.0f;
+    private float startTimeBtwBlock = 1.0f;
     public bool isAttacking;// { get; private set; } //Хзшка, багов без него нет, а с ним время от времени ГГ не может ходить
 
     void Update()
     {
+        if (Input.GetMouseButton(1)) //Input.GetMouseButton(1)
+        {
+            if (_timeBtwBlock < 0) //_timeBtwBlock < 0
+            {
+                Player.isInvul = true;
+                _playerAnim.SetTrigger("Block");
+                _timeBtwBlock = startTimeBtwBlock;
+            }
+        }
+        else
+        {
+            Player.isInvul = false;
+            _timeBtwBlock -= Time.deltaTime;
+        }
         //Debug.Log(isAttacking);
         if (_timeBtwAtck < 0)
         {

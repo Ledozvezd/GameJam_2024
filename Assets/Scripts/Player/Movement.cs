@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private AudioSource _music;
     [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] GameObject _gameObject;
 
     private Rigidbody2D _rb;
     private Attack _attack;
@@ -48,10 +49,12 @@ public class PlayerMovement : MonoBehaviour
         if (direction.x < 0)
         {
             _sprite.flipX = true;
+            _gameObject.transform.rotation = Quaternion.Euler(new Vector2(0,180f));
         }
         else
         {
             _sprite.flipX = false;
+            _gameObject.transform.rotation = Quaternion.Euler(new Vector2(0, 0f));
         }
         ApplyVelocity(direction);
     }

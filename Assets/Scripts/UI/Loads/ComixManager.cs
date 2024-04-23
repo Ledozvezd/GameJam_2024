@@ -27,7 +27,7 @@ public class ComixManager : MonoBehaviour
                     images[i].DOColor(new Color(0, 0, 0, 0.0f), 0.5f);
                     images[i].gameObject.SetActive(false);
                     _LoadManager.SetActive(true);
-                    LoadManager.SwitchToScene("Level");
+                    LoadManager.SwitchToScene("StartVideo");
                     flag = false;
                 }
                 else
